@@ -3,13 +3,16 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     public float moveSpeed = 5.0f; // Movement speed of the character.
-    private Rigidbody2D rb; 
+    private Rigidbody2D rb;
     private Vector2 movement = new Vector2();
     private bool facingRight = true; // Track which direction the player is facing.
+    
+    private Animator animator;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>(); 
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>(); // Get the Animator component attached to the character.
     }
 
     private void Update()
@@ -46,6 +49,9 @@ public class CharacterController : MonoBehaviour
         // Normalize the movement vector to ensure consistent movement speed in all directions.
         movement.Normalize();
 
+        // Update the Animator based on the movement.
+        animator.SetBool("IsRunningLeftOrRight", movement.magnitude > 0);
+        
         rb.velocity = movement * moveSpeed;
     }
 
