@@ -51,6 +51,8 @@ public class CharacterController : MonoBehaviour
 
         // Update the Animator based on the movement.
         animator.SetBool("IsRunningLeftOrRight", movement.magnitude > 0);
+
+        // TO DO: Up and down movement animation
         
         rb.velocity = movement * moveSpeed;
     }
