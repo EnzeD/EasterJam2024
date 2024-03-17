@@ -36,6 +36,10 @@ public class DeerAI : MonoBehaviour
     private Hunger hungerScript;
     private float hungerReductionAmount = 50f;
 
+    private float nextMoveTime = 0f; // When the next move should happen
+    private float moveInterval = 0f; // The interval until the next move
+    private Vector2 moveDirection = Vector2.zero; // The direction of the move
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -65,6 +69,7 @@ public class DeerAI : MonoBehaviour
         {
             case State.Idle:
                 HandleIdleState(distanceToPlayer);
+                HandleIdleMovement();
                 break;
             case State.Alert:
                 HandleAlertState(distanceToPlayer);
@@ -174,6 +179,39 @@ public class DeerAI : MonoBehaviour
         {
             hungerScript.ReduceHunger(hungerReductionAmount);
             Destroy(gameObject); // Destroy the deer object
+        }
+    }
+    private void HandleIdleMovement()
+    {
+        if (Time.time >= nextMoveTime)
+        {
+            // Calculate the next move interval
+            moveInterval = Random.Range(0f, 2f); // Random time between 0 and 2 seconds
+            nextMoveTime = Time.time + moveInterval;
+
+            // Choose a random direction
+            float angle = Random.Range(0f, 360f);
+            moveDirection = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+
+            // Apply the movement
+            StartCoroutine(MoveDeer(moveDirection, 0.1f));
+        }
+    }
+
+    IEnumerator MoveDeer(Vector2 direction, float distance)
+    {
+        Vector2 startPosition = rb.position;
+        Vector2 endPosition = startPosition + direction.normalized * distance;
+
+        // Move over 0.1 seconds for smoothness, adjust if needed
+        float moveDuration = 0.1f;
+        float elapsedTime = 0;
+
+        while (elapsedTime < moveDuration)
+        {
+            rb.position = Vector2.Lerp(startPosition, endPosition, (elapsedTime / moveDuration));
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
     }
 }
