@@ -134,3 +134,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 0
+  sfxPrefab: {fileID: 1328252856309644176, guid: ae7fd985e25136c409e47119162b21d6, type: 3}

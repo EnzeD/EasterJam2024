@@ -13,31 +13,34 @@ public class InteractiveObject : MonoBehaviour
 {
     public InteractiveObjectType objectType;
 
-    private Hunger hungerScript;
+    private WinterReserves hungerScript;
 
     private float hungerReductionAmount;
+
+    public GameObject sfxPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
-        hungerScript = FindObjectOfType<Hunger>();
+        hungerScript = FindObjectOfType<WinterReserves>();
         if(hungerScript == null)
         {
-            Debug.LogError("Hunger script not found!");
+            //Debug.LogError("Hunger script not found!");
         }
 
         switch (objectType)
         {
             case InteractiveObjectType.Berry:
-            hungerReductionAmount = 10f;
+            hungerReductionAmount = 1f;
                 break;
             case InteractiveObjectType.Honey:
-            hungerReductionAmount = 20f;
+            hungerReductionAmount = 2f;
                 break;
             case InteractiveObjectType.RabbitMeat:
-            hungerReductionAmount = 30f;
+            hungerReductionAmount = 5f;
                 break;
             case InteractiveObjectType.DeerMeat:
-            hungerReductionAmount = 50f;
+            hungerReductionAmount = 10f;
                 break;
             case InteractiveObjectType.HumanMeat:
             hungerReductionAmount = 100f;
@@ -56,6 +59,7 @@ public class InteractiveObject : MonoBehaviour
             if(hungerScript != null)
             {
                 hungerScript.ReduceHunger(hungerReductionAmount);
+                Instantiate(sfxPrefab, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
         }

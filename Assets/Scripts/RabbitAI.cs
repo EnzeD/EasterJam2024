@@ -17,9 +17,11 @@ public class RabbitAI : MonoBehaviour
     private Transform playerTransform;
     private bool isMovingToHole = false;
 
-    private float hungerReductionAmount = 30f;
+    private float hungerReductionAmount = 5f;
 
-    private Hunger hungerScript;
+    private WinterReserves hungerScript;
+
+    public GameObject sfxPrefab;
 
     private enum State
     {
@@ -35,10 +37,10 @@ public class RabbitAI : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         SetRandomDestination();
 
-        hungerScript = FindObjectOfType<Hunger>();
+        hungerScript = FindObjectOfType<WinterReserves>();
         if (hungerScript == null)
         {
-            Debug.LogError("Hunger script not found!");
+            //Debug.LogError("Hunger script not found!");
         }
     }
 
@@ -156,7 +158,7 @@ public class RabbitAI : MonoBehaviour
     {
         if (other.CompareTag("RabbitHole"))
         {
-            Debug.Log("collide with hole");
+            //Debug.Log("collide with hole");
             Destroy(gameObject); // Destroy the rabbit
         }
 
@@ -165,6 +167,7 @@ public class RabbitAI : MonoBehaviour
             if (hungerScript != null)
             {
                 hungerScript.ReduceHunger(hungerReductionAmount);
+                Instantiate(sfxPrefab, transform.position, Quaternion.identity);
                 Destroy(gameObject); // Destroy the rabbit object
             }
             else

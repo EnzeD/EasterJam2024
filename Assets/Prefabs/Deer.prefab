@@ -170,7 +170,8 @@ MonoBehaviour:
   alertSprite: {fileID: -1010305996, guid: 2041d3c3666670c4f9289c669f22ae79, type: 3}
   fleeingSprite: {fileID: -1010305996, guid: 2041d3c3666670c4f9289c669f22ae79, type: 3}
   fleeSpeed: 6
-  timeToIncreaseSpeed: 1.5
+  timeToIncreaseSpeed: 1
+  sfxPrefab: {fileID: 1328252856309644176, guid: 46e8185f67ce4524cbdf7e205bc15e9b, type: 3}
 --- !u!114 &8526914117335570986
 MonoBehaviour:
   m_ObjectHideFlags: 0

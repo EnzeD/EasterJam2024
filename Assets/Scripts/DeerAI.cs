@@ -33,12 +33,14 @@ public class DeerAI : MonoBehaviour
     private Vector2 fleeDirection;
     private bool changeDirection;
 
-    private Hunger hungerScript;
-    private float hungerReductionAmount = 50f;
+    private WinterReserves hungerScript;
+    private float hungerReductionAmount = 10f;
 
     private float nextMoveTime = 0f; // When the next move should happen
     private float moveInterval = 0f; // The interval until the next move
     private Vector2 moveDirection = Vector2.zero; // The direction of the move
+
+    public GameObject sfxPrefab;
 
     void Start()
     {
@@ -49,10 +51,10 @@ public class DeerAI : MonoBehaviour
         playerLastMovedTime = Time.time;
         playerLastStationaryTime = Time.time;
 
-        hungerScript = FindObjectOfType<Hunger>();
+        hungerScript = FindObjectOfType<WinterReserves>();
         if (hungerScript == null)
         {
-            Debug.LogError("Hunger script not found!");
+            //Debug.LogError("Hunger script not found!");
         }
     }
 
@@ -178,6 +180,7 @@ public class DeerAI : MonoBehaviour
         if (other.CompareTag("Player") && hungerScript != null)
         {
             hungerScript.ReduceHunger(hungerReductionAmount);
+            Instantiate(sfxPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject); // Destroy the deer object
         }
     }
