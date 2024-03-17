@@ -19,6 +19,7 @@ public class DeerAI : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private GameObject player;
+    private Rigidbody2D playerRb;
     private Vector2 lastPlayerPosition;
     private float playerLastMovedTime;
     private float playerLastStationaryTime;
@@ -40,6 +41,7 @@ public class DeerAI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
+        playerRb = player.GetComponent<Rigidbody2D>();
         playerLastMovedTime = Time.time;
         playerLastStationaryTime = Time.time;
 
@@ -53,6 +55,11 @@ public class DeerAI : MonoBehaviour
     void Update()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
+
+        if (distanceToPlayer >= 1.8f && distanceToPlayer < 2.5f && playerRb.velocity == Vector2.zero)
+        {
+            minDistanceBeforeFleeing = 1f;
+        }
 
         switch (currentState)
         {
@@ -150,6 +157,9 @@ public class DeerAI : MonoBehaviour
             float elapsedTime = Time.time - fleeStartTime;
             float currentSpeed = Mathf.Lerp(0, fleeSpeed, Mathf.Min(1, elapsedTime / timeToIncreaseSpeed));
             rb.velocity = fleeDirection * currentSpeed;
+
+            // Determine the direction of the flee to flip the sprite accordingly
+            spriteRenderer.flipX = fleeDirection.x < 0;
 
             yield return null;
         }

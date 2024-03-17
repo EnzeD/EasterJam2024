@@ -165,12 +165,12 @@ MonoBehaviour:
   currentState: 0
   alertRadius: 3
   fleeTime: 3
-  minDistanceBeforeFleeing: 1.5
+  minDistanceBeforeFleeing: 1.8
   idleSprite: {fileID: -1273524764, guid: 2041d3c3666670c4f9289c669f22ae79, type: 3}
   alertSprite: {fileID: -1010305996, guid: 2041d3c3666670c4f9289c669f22ae79, type: 3}
   fleeingSprite: {fileID: -1010305996, guid: 2041d3c3666670c4f9289c669f22ae79, type: 3}
-  fleeSpeed: 4
-  timeToIncreaseSpeed: 1
+  fleeSpeed: 6
+  timeToIncreaseSpeed: 1.5
 --- !u!114 &8526914117335570986
 MonoBehaviour:
   m_ObjectHideFlags: 0
