@@ -5,7 +5,7 @@ public class RabbitAI : MonoBehaviour
 {
     public float moveSpeed = 2f;
     public float minDistanceToPlayer = 5f; // Distance at which rabbit perceives danger from the player.
-    public float detectionRadius = 5f; // Radius to detect rabbit hole.
+    public float detectionRadius = 1f; // Radius to detect rabbit hole.
     public float randomDestinationRadius = 0.5f;
 
     private Vector3 randomDestination;
@@ -87,10 +87,12 @@ public class RabbitAI : MonoBehaviour
         if (currentState != State.MovingToHole && distanceToPlayer < minDistanceToPlayer)
         {
             currentState = State.Danger;
+            detectionRadius = 3f;
         }
         else if (currentState == State.Danger && distanceToPlayer >= minDistanceToPlayer)
         {
             currentState = State.Idle;
+            detectionRadius = 1f;
             // Ensure the next random destination is safe from the player
             SetRandomDestination(true);
         }

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   minDistanceToPlayer: 2
-  detectionRadius: 1
+  detectionRadius: 0
   randomDestinationRadius: 0.5
   sfxPrefab: {fileID: 1328252856309644176, guid: 46e8185f67ce4524cbdf7e205bc15e9b, type: 3}
 --- !u!58 &6025215054274029426
