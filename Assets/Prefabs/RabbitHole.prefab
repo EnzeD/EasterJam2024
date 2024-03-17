@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2891153582813037494}
   - component: {fileID: 2709267291669307103}
   - component: {fileID: 739316754328113318}
-  m_Layer: 0
+  - component: {fileID: -7328993891331068338}
+  m_Layer: 7
   m_Name: RabbitHole
   m_TagString: RabbitHole
   m_Icon: {fileID: 0}
@@ -120,3 +121,38 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.010982275}
   serializedVersion: 2
   m_Radius: 0.093667746
+--- !u!70 &-7328993891331068338
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866926216162220004}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0065122587, y: -0.029660942}
+  m_Size: {x: 0.19292924, y: 0.19292924}
+  m_Direction: 1
