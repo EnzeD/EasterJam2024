@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RabbitAI : MonoBehaviour
@@ -16,6 +17,15 @@ public class RabbitAI : MonoBehaviour
     private Transform playerTransform;
     private bool isMovingToHole = false;
 
+    private enum State
+    {
+        Idle,
+        MovingToHole,
+        Danger
+    }
+
+    private State currentState = State.Idle;
+
     private void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -24,13 +34,26 @@ public class RabbitAI : MonoBehaviour
 
     private void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-
-        if (isMovingToHole)
+        switch (currentState)
         {
-            MoveTowards(holeDestination);
+            case State.Idle:
+                IdleBehavior();
+                break;
+            case State.MovingToHole:
+                MoveTowards(holeDestination);
+                break;
+            case State.Danger:
+                RunFromPlayer();
+                break;
         }
-        else
+
+        CheckForHole();
+        CheckForDanger();
+    }
+
+    void CheckForHole()
+    {
+        if (currentState != State.MovingToHole)
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
             foreach (var hit in hits)
@@ -38,43 +61,41 @@ public class RabbitAI : MonoBehaviour
                 if (hit.CompareTag("RabbitHole"))
                 {
                     holeDestination = hit.transform.position;
-                    isMovingToHole = true;
+                    currentState = State.MovingToHole;
                     return; // Exit early if a rabbit hole is found
                 }
-                else
-                {
-                    isMovingToHole = false;
-                }
             }
+        }
+    }
 
-            //Debug.Log("Distance to player: " + distanceToPlayer);
-            if (distanceToPlayer < minDistanceToPlayer)
-            {
-                // Danger state
-                isIdle = false;
-                RunFromPlayer();
-            }
-            else
-            {
-                // Idle state
-                isIdle = true;
-                IdleBehavior();
-            }
-        }        
+    void CheckForDanger()
+    {
+        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+        if (currentState != State.MovingToHole && distanceToPlayer < minDistanceToPlayer)
+        {
+            currentState = State.Danger;
+        }
+        else if (currentState == State.Danger && distanceToPlayer >= minDistanceToPlayer)
+        {
+            // Only return to Idle if not moving to hole
+            currentState = State.Idle;
+        }
     }
 
     void IdleBehavior()
     {
-        if (waitTimer <= 0)
+        if (currentState == State.Idle)
         {
-
-            SetRandomDestination();
-            waitTimer = waitTime; // Reset wait timer
-        }
-        else
-        {
-            waitTimer -= Time.deltaTime; // Decrease timer
-            MoveTowards(randomDestination);
+            if (waitTimer <= 0)
+            {
+                SetRandomDestination();
+                waitTimer = waitTime; // Reset wait timer
+            }
+            else
+            {
+                waitTimer -= Time.deltaTime; // Decrease timer
+                MoveTowards(randomDestination);
+            }
         }
     }
 
@@ -82,7 +103,6 @@ public class RabbitAI : MonoBehaviour
     {
         Vector3 directionFromPlayer = transform.position - playerTransform.position;
         Vector3 runDestination = transform.position + directionFromPlayer;
-
         MoveTowards(runDestination);
     }
 
@@ -93,8 +113,7 @@ public class RabbitAI : MonoBehaviour
 
     void SetRandomDestination()
     {
-        // Set a random destination within a range around the rabbit
-        randomDestination = transform.position + new Vector3(Random.Range(-randomDestinationRadius, randomDestinationRadius), Random.Range(randomDestinationRadius, randomDestinationRadius), 0);
+        randomDestination = transform.position + new Vector3(Random.Range(-randomDestinationRadius, randomDestinationRadius), Random.Range(-randomDestinationRadius, randomDestinationRadius), 0);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
