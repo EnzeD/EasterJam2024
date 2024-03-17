@@ -3,51 +3,53 @@ using UnityEngine;
 public class PlayerDynamicSorting : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    public float checkRadius = 5f; // Radius to check for nearby trees
-    public LayerMask treeLayer; // Assign in inspector, set to the layer your trees are on
+    public float checkRadius = 1f; // Radius to check for nearby obstacles
+    public LayerMask obstacleLayer;
+
+    private float yOffset;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        obstacleLayer = LayerMask.GetMask("Obstacle");
     }
 
     void Update()
     {
-        AdjustSortingOrderBasedOnClosestTree();
+        AdjustSortingOrderBasedOnClosestObstacle();
     }
 
-    void AdjustSortingOrderBasedOnClosestTree()
+    void AdjustSortingOrderBasedOnClosestObstacle()
     {
-        // Find all trees within checkRadius
-        Collider2D[] treesInRange = Physics2D.OverlapCircleAll(transform.position, checkRadius, treeLayer);
+        // Find all obstacles within checkRadius
+        Collider2D[] obstaclesInRange = Physics2D.OverlapCircleAll(transform.position, checkRadius, obstacleLayer);
 
-        // Keep track of the closest tree and its distance
-        Collider2D closestTree = null;
+        // Keep track of the closest obstacle and its distance
+        Collider2D closestObstacle = null;
         float closestDistance = float.MaxValue;
 
-        foreach (var tree in treesInRange)
+        foreach (var obstacle in obstaclesInRange)
         {
-            float distance = Vector2.Distance(transform.position, tree.transform.position);
+            float distance = Vector2.Distance(transform.position, obstacle.transform.position);
             if (distance < closestDistance)
             {
-                closestTree = tree;
+                closestObstacle = obstacle;
                 closestDistance = distance;
             }
         }
 
-        if (closestTree != null)
+        if (closestObstacle != null)
         {
-            // Determine sorting order based on Y position relative to the closest tree
-            // You might want to adjust this logic based on your game's needs, e.g., adding an offset
-            if (transform.position.y < closestTree.transform.position.y)
+            // Determine sorting order based on Y position relative to the closest obstacle
+            if (transform.position.y < closestObstacle.transform.position.y - yOffset)
             {
-                // Player is behind the tree
-                spriteRenderer.sortingOrder = closestTree.GetComponent<SpriteRenderer>().sortingOrder +1;
+                // Object is behind the tree
+                spriteRenderer.sortingOrder = closestObstacle.GetComponent<SpriteRenderer>().sortingOrder +1;
             }
             else
             {
-                // Player is in front of the tree
-                spriteRenderer.sortingOrder = closestTree.GetComponent<SpriteRenderer>().sortingOrder -1;
+                // Object is in front of the tree
+                spriteRenderer.sortingOrder = closestObstacle.GetComponent<SpriteRenderer>().sortingOrder -1;
             }
         }
     }

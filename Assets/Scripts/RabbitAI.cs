@@ -49,6 +49,7 @@ public class RabbitAI : MonoBehaviour
 
         CheckForHole();
         CheckForDanger();
+        Debug.Log("Current State: " + currentState);
     }
 
     void CheckForHole()
@@ -77,8 +78,9 @@ public class RabbitAI : MonoBehaviour
         }
         else if (currentState == State.Danger && distanceToPlayer >= minDistanceToPlayer)
         {
-            // Only return to Idle if not moving to hole
             currentState = State.Idle;
+            // Ensure the next random destination is safe from the player
+            SetRandomDestination(true);
         }
     }
 
@@ -88,7 +90,7 @@ public class RabbitAI : MonoBehaviour
         {
             if (waitTimer <= 0)
             {
-                SetRandomDestination();
+                SetRandomDestination(true);
                 waitTimer = waitTime; // Reset wait timer
             }
             else
@@ -108,12 +110,33 @@ public class RabbitAI : MonoBehaviour
 
     void MoveTowards(Vector3 destination)
     {
+        // Calculate movement direction
+        Vector3 moveDirection = destination - transform.position;
+
+        // Flip sprite based on move direction along the x-axis
+        if (moveDirection.x < 0) // Moving left
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if (moveDirection.x > 0) // Moving right
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+
+        // Move towards the destination
         transform.position = Vector3.MoveTowards(transform.position, destination, moveSpeed * Time.deltaTime);
     }
 
-    void SetRandomDestination()
+    void SetRandomDestination(bool ensureSafeFromPlayer = false)
     {
-        randomDestination = transform.position + new Vector3(Random.Range(-randomDestinationRadius, randomDestinationRadius), Random.Range(-randomDestinationRadius, randomDestinationRadius), 0);
+        Vector3 potentialDestination;
+        do
+        {
+            potentialDestination = transform.position + new Vector3(Random.Range(-randomDestinationRadius, randomDestinationRadius), Random.Range(-randomDestinationRadius, randomDestinationRadius), 0);
+        }
+        while (ensureSafeFromPlayer && Vector3.Distance(potentialDestination, playerTransform.position) < minDistanceToPlayer);
+
+        randomDestination = potentialDestination;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
