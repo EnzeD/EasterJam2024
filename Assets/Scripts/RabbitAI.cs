@@ -10,7 +10,7 @@ public class RabbitAI : MonoBehaviour
 
     private Vector3 randomDestination;
     private Vector3 holeDestination;
-    private float waitTime = 2f; // Time to wait before moving again.
+    private float waitTime; // Time to wait before moving again.
     private float waitTimer;
     private bool isIdle = true;
 
@@ -59,7 +59,7 @@ public class RabbitAI : MonoBehaviour
 
         CheckForHole();
         CheckForDanger();
-        Debug.Log("Current State: " + currentState);
+        //Debug.Log("Current State: " + currentState);
     }
 
     void CheckForHole()
@@ -147,6 +147,9 @@ public class RabbitAI : MonoBehaviour
         while (ensureSafeFromPlayer && Vector3.Distance(potentialDestination, playerTransform.position) < minDistanceToPlayer);
 
         randomDestination = potentialDestination;
+
+        // Assign a new random wait time between 1 and 2 seconds each time a new destination is set.
+        waitTime = Random.Range(1f, 2f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

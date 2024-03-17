@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class DeerAI : MonoBehaviour
 {
@@ -15,25 +14,34 @@ public class DeerAI : MonoBehaviour
     public Sprite fleeingSprite;
 
     public float fleeSpeed = 4f;
-    public float timeToIncreaseSpeed = 1f; // Time taken to reach full speed
+    public float timeToIncreaseSpeed = 1f;
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private GameObject player;
     private Vector2 lastPlayerPosition;
     private float playerLastMovedTime;
+    private float playerLastStationaryTime;
+    private bool playerIsMoving;
+    private float playerContinuousMoveStartTime; // Tracks when the player starts moving continuously within the alert radius
+    private bool playerStartedMoving = false; // Indicates if the player started moving within the alert radius
+    private bool playerHasBeenMovingFor1Sec = false;
+    private float movementStartTime;
+
+    private float lastDirectionChangeTime = 0f;
+    private Vector2 fleeDirection;
+    private bool changeDirection;
 
     private Hunger hungerScript;
     private float hungerReductionAmount = 50f;
-
-    private bool changeDirection = true; // Flag to alternate direction change
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        player = GameObject.FindGameObjectWithTag("Player"); 
-        lastPlayerPosition = player.transform.position;
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerLastMovedTime = Time.time;
+        playerLastStationaryTime = Time.time;
 
         hungerScript = FindObjectOfType<Hunger>();
         if (hungerScript == null)
@@ -44,77 +52,92 @@ public class DeerAI : MonoBehaviour
 
     void Update()
     {
-        // Check if player has moved
-        if ((Vector2)player.transform.position != lastPlayerPosition)
-        {
-            playerLastMovedTime = Time.time;
-            lastPlayerPosition = player.transform.position;
-        }
+        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
         switch (currentState)
         {
             case State.Idle:
-                HandleIdleState();
+                HandleIdleState(distanceToPlayer);
                 break;
             case State.Alert:
-                HandleAlertState();
+                HandleAlertState(distanceToPlayer);
                 break;
             case State.Fleeing:
-                HandleFleeingState();
+                HandleFleeingState(distanceToPlayer);
                 break;
         }
 
-        // Flip sprite based on deer movement direction
-        if (rb.velocity.x < 0)
+        spriteRenderer.sprite = currentState switch
         {
-            spriteRenderer.flipX = true; // Flip sprite to face left
-        }
-        else if (rb.velocity.x > 0)
+            State.Idle => idleSprite,
+            State.Alert => alertSprite,
+            State.Fleeing => fleeingSprite,
+            _ => spriteRenderer.sprite
+        };
+
+        // Update player movement tracking
+        CheckPlayerMovement();
+    }
+
+    private void CheckPlayerMovement()
+    {
+        if (Vector2.Distance(player.transform.position, rb.position) <= alertRadius)
         {
-            spriteRenderer.flipX = false; // Normal sprite orientation (face right)
+            if (player.transform.hasChanged)
+            {
+                player.transform.hasChanged = false;
+                playerLastMovedTime = Time.time;
+                playerIsMoving = true;
+            }
+            else if (playerIsMoving && (Time.time - playerLastMovedTime >= 0.5f))
+            {
+                playerIsMoving = false;
+                playerLastStationaryTime = Time.time;
+            }
         }
     }
 
-    void HandleIdleState()
+    private void HandleIdleState(float distanceToPlayer)
     {
-        spriteRenderer.sprite = idleSprite;
-        float distance = Vector2.Distance(transform.position, player.transform.position);
-
-        if (distance <= alertRadius && Time.time - playerLastMovedTime <= 0.5f)
+        if (distanceToPlayer <= alertRadius && playerIsMoving)
         {
             currentState = State.Alert;
         }
     }
 
-    void HandleAlertState()
+    private void HandleAlertState(float distanceToPlayer)
     {
-        spriteRenderer.sprite = alertSprite;
-        float distance = Vector2.Distance(transform.position, player.transform.position);
-
-        if (distance > alertRadius || Time.time - playerLastMovedTime > 0.5f)
+        if (distanceToPlayer > alertRadius)
         {
             currentState = State.Idle;
         }
-        else if (Time.time - playerLastMovedTime <= 0.5f && distance <= minDistanceBeforeFleeing)
+        else if (distanceToPlayer <= minDistanceBeforeFleeing || (playerIsMoving && Time.time - playerLastMovedTime > 1f))
         {
             currentState = State.Fleeing;
-            StartCoroutine(Flee());
+        }
+        else if (!playerIsMoving && Time.time - playerLastStationaryTime >= 0.5f)
+        {
+            currentState = State.Idle;
         }
     }
 
-    void HandleFleeingState()
+    private void HandleFleeingState(float distanceToPlayer)
     {
-        spriteRenderer.sprite = fleeingSprite;
-        // Movement is handled in the Flee coroutine
+        if (distanceToPlayer > alertRadius)
+        {
+            currentState = State.Idle;
+        }
+        else
+        {
+            StartCoroutine(Flee());
+        }
     }
-
     IEnumerator Flee()
     {
-        Vector2 fleeDirection = (transform.position - player.transform.position).normalized;
+        fleeDirection = (transform.position - player.transform.position).normalized;
         float fleeStartTime = Time.time;
-        float lastDirectionChangeTime = Time.time;
+        lastDirectionChangeTime = Time.time;
 
-        // Gradually increase speed to full speed in the first 2 seconds
         while (Time.time - fleeStartTime < fleeTime)
         {
             if (Time.time - lastDirectionChangeTime >= 0.5f)
@@ -124,36 +147,23 @@ public class DeerAI : MonoBehaviour
                 lastDirectionChangeTime = Time.time;
             }
 
-            float currentSpeed = Mathf.Lerp(0, fleeSpeed, (Time.time - fleeStartTime) / timeToIncreaseSpeed);
-            rb.velocity = fleeDirection.normalized * currentSpeed;
-
-            // Ensure the speed does not exceed fleeSpeed after the initial speed increase period
-            if (Time.time - fleeStartTime >= timeToIncreaseSpeed)
-            {
-                currentSpeed = fleeSpeed;
-            }
+            float elapsedTime = Time.time - fleeStartTime;
+            float currentSpeed = Mathf.Lerp(0, fleeSpeed, Mathf.Min(1, elapsedTime / timeToIncreaseSpeed));
+            rb.velocity = fleeDirection * currentSpeed;
 
             yield return null;
         }
 
         rb.velocity = Vector2.zero;
-        currentState = State.Idle;
+        currentState = State.Idle; // Return to idle after fleeing
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && hungerScript != null)
         {
-            if (hungerScript != null)
-            {
-                hungerScript.ReduceHunger(hungerReductionAmount);
-                Destroy(gameObject); // Destroy the deer object
-            }
-            else
-            {
-                Debug.LogError("Hunger script not found on player!");
-            }
+            hungerScript.ReduceHunger(hungerReductionAmount);
+            Destroy(gameObject); // Destroy the deer object
         }
     }
 }

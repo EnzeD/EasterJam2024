@@ -104038,6 +104038,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3309375893999987742, guid: 0f32fef3f9101f24e8ac4fe0c682a91d, type: 3}
+      propertyPath: fleeSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309375893999987742, guid: 0f32fef3f9101f24e8ac4fe0c682a91d, type: 3}
+      propertyPath: alertRadius
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309375893999987742, guid: 0f32fef3f9101f24e8ac4fe0c682a91d, type: 3}
+      propertyPath: timeToIncreaseSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309375893999987742, guid: 0f32fef3f9101f24e8ac4fe0c682a91d, type: 3}
+      propertyPath: minDistanceBeforeFleeing
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
