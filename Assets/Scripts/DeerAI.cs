@@ -42,6 +42,8 @@ public class DeerAI : MonoBehaviour
 
     public GameObject sfxPrefab;
 
+    private Animator animator;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -56,6 +58,8 @@ public class DeerAI : MonoBehaviour
         {
             //Debug.LogError("Hunger script not found!");
         }
+
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -81,13 +85,13 @@ public class DeerAI : MonoBehaviour
                 break;
         }
 
-        spriteRenderer.sprite = currentState switch
+        /*spriteRenderer.sprite = currentState switch
         {
             State.Idle => idleSprite,
             State.Alert => alertSprite,
             State.Fleeing => fleeingSprite,
             _ => spriteRenderer.sprite
-        };
+        };*/
 
         // Update player movement tracking
         CheckPlayerMovement();
@@ -116,6 +120,7 @@ public class DeerAI : MonoBehaviour
         if (distanceToPlayer <= alertRadius && playerIsMoving)
         {
             currentState = State.Alert;
+            animator.SetTrigger("ToAlert");
         }
     }
 
@@ -124,14 +129,18 @@ public class DeerAI : MonoBehaviour
         if (distanceToPlayer > alertRadius)
         {
             currentState = State.Idle;
+            animator.SetTrigger("ToIdle");
+
         }
         else if (distanceToPlayer <= minDistanceBeforeFleeing || (playerIsMoving && Time.time - playerLastMovedTime > 1f))
         {
             currentState = State.Fleeing;
+            animator.SetTrigger("ToFleeing");
         }
         else if (!playerIsMoving && Time.time - playerLastStationaryTime >= 0.5f)
         {
             currentState = State.Idle;
+            animator.SetTrigger("ToIdle");
         }
     }
 
@@ -140,6 +149,7 @@ public class DeerAI : MonoBehaviour
         if (distanceToPlayer > alertRadius)
         {
             currentState = State.Idle;
+            animator.SetTrigger("ToIdle");
         }
         else
         {
@@ -173,6 +183,7 @@ public class DeerAI : MonoBehaviour
 
         rb.velocity = Vector2.zero;
         currentState = State.Idle; // Return to idle after fleeing
+        animator.SetTrigger("ToIdle");
     }
 
     private void OnTriggerEnter2D(Collider2D other)

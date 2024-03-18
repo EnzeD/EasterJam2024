@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2041d3c3666670c4f9289c669f22ae79
+guid: 778f46f307acc334f8521be70a04d9cf
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,148 +123,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprite_first_draft_no_bg_0
+      name: Grey_Rabbit running_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 76
-        width: 12
-        height: 17
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9c2fb47f269a8d4386e2cc9836641f9
-      internalID: 327356975
+      spriteID: b652dfe1d9397f34881a6c6a7f66bdee
+      internalID: 2012553389
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_first_draft_no_bg_1
+      name: Grey_Rabbit running_1
       rect:
         serializedVersion: 2
-        x: 31
-        y: 75
-        width: 13
-        height: 17
+        x: 64
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9b8d5fc26d2bc048b59306e010e5e19
-      internalID: -2089628611
+      spriteID: b0b1e465fa5f0954a8b51111587b7e96
+      internalID: -661244377
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_first_draft_no_bg_2
+      name: Grey_Rabbit running_2
       rect:
         serializedVersion: 2
-        x: 76
-        y: 43
-        width: 41
-        height: 40
+        x: 128
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c31964175b1dfb44c8b9f7f11e43b749
-      internalID: -1010305996
+      spriteID: 39c2f24e33b715444bfb48766605d2ac
+      internalID: -1423605978
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_first_draft_no_bg_3
+      name: Grey_Rabbit running_3
       rect:
         serializedVersion: 2
-        x: 184
-        y: 45
-        width: 19
-        height: 36
+        x: 192
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0075e842b76b4f4183a699214c7baa9
-      internalID: -138713267
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprite_first_draft_no_bg_4
-      rect:
-        serializedVersion: 2
-        x: 211
-        y: 44
-        width: 23
-        height: 36
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 95119de6ea33a074fa753261ce64dc3f
-      internalID: 274325100
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprite_first_draft_no_bg_5
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 42
-        width: 51
-        height: 31
-      alignment: 9
-      pivot: {x: 0.45902035, y: 0.6433125}
-      border: {x: 0, y: 4, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9e99c38d1d91acc41bd80541687e79f5
-      internalID: -691814841
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprite_first_draft_no_bg_6
-      rect:
-        serializedVersion: 2
-        x: 122
-        y: 41
-        width: 46
-        height: 28
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ad3664c1faed1bf4389f3d5963e9a05e
-      internalID: -1273524764
+      spriteID: 7784aece4d01e254da7d65440e07c2d7
+      internalID: 1284472070
       vertices: []
       indices: 
       edges: []
@@ -280,13 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Sprite_first_draft_no_bg_0: 327356975
-      Sprite_first_draft_no_bg_1: -2089628611
-      Sprite_first_draft_no_bg_2: -1010305996
-      Sprite_first_draft_no_bg_3: -138713267
-      Sprite_first_draft_no_bg_4: 274325100
-      Sprite_first_draft_no_bg_5: -691814841
-      Sprite_first_draft_no_bg_6: -1273524764
+      Grey_Rabbit running_0: 2012553389
+      Grey_Rabbit running_1: -661244377
+      Grey_Rabbit running_2: -1423605978
+      Grey_Rabbit running_3: 1284472070
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

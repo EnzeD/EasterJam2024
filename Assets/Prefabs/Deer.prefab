@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7722685616580695616}
   - component: {fileID: 3309375893999987742}
   - component: {fileID: 8526914117335570986}
+  - component: {fileID: 4684311377901790908}
   m_Layer: 0
   m_Name: Deer
   m_TagString: Untagged
@@ -188,4 +189,25 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 128
-  yOffset: 0
+  yOffset: 0.02
+--- !u!95 &4684311377901790908
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61238433866077788}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5d7b5bb702efc9e49a057a9be74b51e9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
