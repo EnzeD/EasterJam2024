@@ -164,13 +164,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  alertRadius: 3
-  fleeTime: 3
+  alertRadius: 3.5
+  fleeTime: 2.5
   minDistanceBeforeFleeing: 1.8
   idleSprite: {fileID: -1273524764, guid: 2041d3c3666670c4f9289c669f22ae79, type: 3}
   alertSprite: {fileID: -1010305996, guid: 2041d3c3666670c4f9289c669f22ae79, type: 3}
   fleeingSprite: {fileID: -1010305996, guid: 2041d3c3666670c4f9289c669f22ae79, type: 3}
-  fleeSpeed: 6
+  fleeSpeed: 4
   timeToIncreaseSpeed: 1
   sfxPrefab: {fileID: 1328252856309644176, guid: 46e8185f67ce4524cbdf7e205bc15e9b, type: 3}
 --- !u!114 &8526914117335570986

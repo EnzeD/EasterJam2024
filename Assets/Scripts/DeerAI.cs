@@ -68,7 +68,7 @@ public class DeerAI : MonoBehaviour
 
         if (distanceToPlayer >= 1.8f && distanceToPlayer < 2.5f && playerRb.velocity == Vector2.zero)
         {
-            minDistanceBeforeFleeing = 1f;
+            minDistanceBeforeFleeing = 1.3f;
         }
 
         switch (currentState)
