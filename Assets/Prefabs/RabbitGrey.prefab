@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6025215054274029426}
   - component: {fileID: 7697967666109371245}
   - component: {fileID: 4300289066249404271}
+  - component: {fileID: -2107932704957401695}
   m_Layer: 0
   m_Name: RabbitGrey
   m_TagString: Untagged
@@ -184,3 +185,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   yOffset: 0.3
+--- !u!95 &-2107932704957401695
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3445145919356260381}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a8f27bed3c264ba45827f14512a47193, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

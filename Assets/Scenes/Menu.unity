@@ -96204,7 +96204,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 134}
+  m_AnchoredPosition: {x: 0, y: 130.5}
   m_SizeDelta: {x: 433.6465, y: 68.1473}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &943771786
@@ -96229,8 +96229,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: WILD PAWS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6113be7d92d085146982211a7980c36d, type: 2}
-  m_sharedMaterial: {fileID: 8330576422541093830, guid: 6113be7d92d085146982211a7980c36d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: adab9ac1fafa3274d81cfec959e56862, type: 2}
+  m_sharedMaterial: {fileID: 8330576422541093830, guid: adab9ac1fafa3274d81cfec959e56862, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -99500,7 +99500,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 70.3, y: 21.099976}
+  m_AnchoredPosition: {x: 70.30005, y: 21.099976}
   m_SizeDelta: {x: 125.546906, y: 23.4375}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1364392818
@@ -101659,7 +101659,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -116}
+  m_AnchoredPosition: {x: 0, y: -123.6}
   m_SizeDelta: {x: 157.7315, y: 48.1473}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569419834
@@ -104931,8 +104931,8 @@ Canvas:
   m_GameObject: {fileID: 1992137922}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
@@ -104943,7 +104943,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 161
   m_TargetDisplay: 0
 --- !u!224 &1992137926
 RectTransform:

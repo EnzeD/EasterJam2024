@@ -23,6 +23,8 @@ public class RabbitAI : MonoBehaviour
 
     public GameObject sfxPrefab;
 
+    private Animator animator;
+
     private enum State
     {
         Idle,
@@ -36,6 +38,8 @@ public class RabbitAI : MonoBehaviour
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         SetRandomDestination();
+
+        animator = GetComponent<Animator>();
 
         hungerScript = FindObjectOfType<WinterReserves>();
         if (hungerScript == null)
@@ -113,6 +117,8 @@ public class RabbitAI : MonoBehaviour
                 MoveTowards(randomDestination);
             }
         }
+
+        animator.SetBool("IsMoving", false);
     }
 
     void RunFromPlayer()
@@ -126,6 +132,8 @@ public class RabbitAI : MonoBehaviour
     {
         // Calculate movement direction
         Vector3 moveDirection = destination - transform.position;
+        bool isMoving = moveDirection.magnitude > 0.01f;
+        animator.SetBool("IsMoving", isMoving);
 
         // Flip sprite based on move direction along the x-axis
         if (moveDirection.x < 0) // Moving left
